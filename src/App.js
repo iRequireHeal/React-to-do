@@ -4,36 +4,46 @@ import Task from "./components/Task";
 
 function App() {
     const [taskName, setName] = useState("kukara4a");
-    const count = 1
     const [taskList, setTaskList] = useState([
         {id: 0, name: "ti sobaka?", isReady: false},
         {id: 1, name: "a mojet ti suraka?", isReady: true},
         {id: 2, name: "ili ti monako?", isReady: false}
     ]);
+    const [taskFilter, setTaskFilter] = useState(taskList)
 
-        const toggleReady = (id) => {
-            setTaskList(taskList.map(selectedTask => selectedTask.id === id ? {
-                ...selectedTask,
-                isReady: !selectedTask.isReady
-            } : selectedTask))
-        }
+    const toggleReady = (id) => {
+        setTaskList(taskList.map(selectedTask => selectedTask.id === id ? {
+            ...selectedTask,
+            isReady: !selectedTask.isReady
+        } : selectedTask))
+    }
 
-        const deleteTask = (id) => {
-            setTaskList(taskList.filter(selectedTask => selectedTask.id !== id))
-        }
+    const deleteTask = (id) => {
+        setTaskList(taskList.filter(selectedTask => selectedTask.id !== id))
+    }
 
-        const[tasks, setTasks] = useState(taskList.map(task => <Task task={task} deleteTask={deleteTask} toggleReady={toggleReady}/>))
+    const addTask = () => {
+        setTaskList([...taskList, {
+            name: taskName,
+            id: taskList.length + 1,
+            isReady: false
+        }])
+    }
 
-        const compleatedFilter = () => {
-          setTasks(taskList.map(task => task.isReady === true ? <Task task={task} deleteTask={deleteTask} toggleReady={toggleReady}/> : null))
-        }
+    const[tasks, setTasks] = useState(taskList.map(task => <Task task={task} deleteTask={deleteTask} toggleReady={toggleReady}/>))
 
-        const allFilter = () => {
-            setTasks(taskList.map(task =><Task task={task} deleteTask={deleteTask} toggleReady={toggleReady}/>))
-        }
-        const activeFilter = () => {
-            setTasks(taskList.map(task => task.isReady === false ? <Task task={task} deleteTask={deleteTask} toggleReady={toggleReady}/> : null))
-        }
+    const compleatedFilter = () => {
+        setTasks(taskList.map(task => task.isReady === true ?
+            <Task task={task} deleteTask={deleteTask} toggleReady={toggleReady}/> : null))
+    }
+
+    const allFilter = () => {
+        setTasks(taskList.map(task => <Task task={task} deleteTask={deleteTask} toggleReady={toggleReady}/>))
+    }
+    const activeFilter = () => {
+        setTasks(taskList.map(task => task.isReady === false ?
+            <Task task={task} deleteTask={deleteTask} toggleReady={toggleReady}/> : null))
+    }
 
     return (
         <div className="App">
@@ -41,15 +51,10 @@ function App() {
                 <h1 className="title">это не тайтл</h1>
                 <div className="inputButtons">
                     <input className="taskInput" value={taskName} onChange={(event) => setName(event.target.value)}/>
-                    <button className="addButton" onClick={() => setTaskList([...taskList, {
-                        name: taskName,
-                        id: taskList.length + 1,
-                        isReady: false
-                    }])}>ADD
-                    </button>
-                    <button className="buttons" onClick={allFilter}>ALL</button>
-                    <button className="buttons" onClick={compleatedFilter}>Compleated</button>
-                    <button className="buttons" onClick={activeFilter}>Active</button>
+                    <button className="addButton" onClick={() => addTask()}>ADD</button>
+                    <button className="buttons" onClick={() =>allFilter()}>ALL</button>
+                    <button className="buttons" onClick={() =>compleatedFilter()}>Compleated()</button>
+                    <button className="buttons" onClick={() =>activeFilter()}>Active</button>
                 </div>
                 <div>{tasks}</div>
             </div>
