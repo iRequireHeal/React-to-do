@@ -1,0 +1,30 @@
+
+
+.itembox {
+    margin: 10px;
+    display: flex;
+    border: 2px solid aqua;
+    border-radius: 20px;
+}
+
+.taskName {
+    margin: 30px ;
+    width: 700px;
+    font-size: 40px;
+}
+
+.taskCheckbox {
+    margin-top: 40px;
+    margin-left:260px;
+    width: 30px;
+    height: 30px;
+    border-radius: 40%;
+}
+
+.deleteButton {
+    margin: 40px 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background-color: red;
+}
